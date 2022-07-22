@@ -4,10 +4,26 @@ const sequelize = require('../db') //мпотрим настройки БД
 
 
     const Tutorial = sequelize.define("tutorial", {
-        title: { type: DataTypes.STRING },
-        description: { type: DataTypes.STRING },
-        published: { type: DataTypes.BOOLEAN }
+        id: {type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement:true},
+        title: { type: DataTypes.STRING, defaultValue: null },
+        description: { type: DataTypes.STRING, defaultValue: null },
+        published: { type: DataTypes.BOOLEAN, defaultValue: false }
+    });
+
+    const Author = sequelize.define("author", {
+        id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
+        name: {type: DataTypes.STRING, allowNull: false}
+    });
+
+    const AuthorTutorial = sequelize.define("author_tutorial", {
+        id: {type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement:true},
     });
 
 
-module.exports = { Tutorial };
+
+    Tutorial.belongsToMany(Author, {through: 'author_tutorial'});
+    Author.belongsToMany(Tutorial, {through: 'author_tutorial'});
+
+
+
+module.exports = { Tutorial, Author };
