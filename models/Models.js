@@ -26,4 +26,4 @@ const sequelize = require('../db') //мпотрим настройки БД
 
 
 
-module.exports = { Tutorial, Author };
+module.exports = { Tutorial, Author, AuthorTutorial };

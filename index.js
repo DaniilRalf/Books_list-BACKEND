@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const sequelize = require('./db');
-const TutorialRouters = require('./routes/Tutorial.router');
+const router = require('./routes/index.router')
 const models = require('./models/Models');
 // ----------IMPORTS----------------------------
 
@@ -10,7 +10,7 @@ const models = require('./models/Models');
 const PORT = process.env.PORT;
 const app = express();
 app.use(express.json());
-app.use('/api', TutorialRouters);
+app.use('/api', router);
 // ----------APP--------------------------------
 
 
