@@ -14,6 +14,20 @@ class TuturialController {
             res.status(400).json({message: e})
         }
     };
+    
+    
+    async getById(req,  res){
+        try {
+            const {id} = req.body;
+            const book = await Tutorial.findOne({
+                where: {id: id},
+                include: [Author]
+            })
+            res.json(book);
+        } catch (e) {
+            res.status(400).json({message: e})
+        }
+    }
 
 
     async create(req, res){
