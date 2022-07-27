@@ -1,4 +1,7 @@
 const { Tutorial, Author, AuthorTutorial } = require('../models/Models');
+const uuid = require('uuid');
+const path = require('path');
+
 
 class TuturialController {
 
@@ -33,18 +36,26 @@ class TuturialController {
     async create(req, res){
         try {
             const {title, description, authorId} = req.body;
+            const {img} = req.files;
+
             const bookSearch = await Tutorial.findOne({where: {title: title}});
             if (bookSearch){
                 res.status(400).json('Данная книга уже есть в списке');
                 return;
             }
 
-            const bookItem = await Tutorial.create({title: title, description: description});
-            const authorItem = await Author.findOne({where: {id: authorId}});
-            await bookItem.addAuthor(authorItem);
+            let fileName = uuid.v4() + '.jpg';
+            await img.mv(path.resolve(__dirname, '..', 'static', fileName));
+
+            const bookItem = await Tutorial.create({title: title, description: description, img: fileName});
+            if (authorId){
+                const authorItem = await Author.findOne({where: {id: authorId}});
+                await bookItem.addAuthor(authorItem);
+            }
             res.json(bookItem);
+
         } catch (e) {
-            res.status(400).json(e)
+            res.stat(400).json(e);
         }
     };
 

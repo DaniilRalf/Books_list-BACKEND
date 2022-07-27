@@ -7,7 +7,8 @@ const sequelize = require('../db') //мпотрим настройки БД
         id: {type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement:true},
         title: { type: DataTypes.STRING, defaultValue: null },
         description: { type: DataTypes.STRING, defaultValue: null },
-        published: { type: DataTypes.BOOLEAN, defaultValue: false }
+        published: { type: DataTypes.BOOLEAN, defaultValue: false },
+        img: { type: DataTypes.STRING, defaultValue: null}
     });
 
     const Author = sequelize.define("author", {
