@@ -51,9 +51,8 @@ class TuturialController {
             if (authorId){
                 const authorItem = await Author.findOne({where: {id: authorId}});
                 await bookItem.addAuthor(authorItem);
-            }
+            };
             res.json(bookItem);
-
         } catch (e) {
             res.stat(400).json(e);
         }
