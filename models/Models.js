@@ -16,6 +16,11 @@ const sequelize = require('../db') //мпотрим настройки БД
         name: {type: DataTypes.STRING, allowNull: false}
     });
 
+    const Country = sequelize.define("country", {
+        id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
+        name: {type: DataTypes.STRING, allowNull: false}
+    });
+
     const AuthorTutorial = sequelize.define("author_tutorial", {
         id: {type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement:true},
     });
@@ -25,6 +30,9 @@ const sequelize = require('../db') //мпотрим настройки БД
     Tutorial.belongsToMany(Author, {through: 'author_tutorial'});
     Author.belongsToMany(Tutorial, {through: 'author_tutorial'});
 
+    Country.hasMany(Author);
+    Author.belongsTo(Country);
 
 
-module.exports = { Tutorial, Author, AuthorTutorial };
+
+module.exports = { Tutorial, Author, AuthorTutorial, Country };
